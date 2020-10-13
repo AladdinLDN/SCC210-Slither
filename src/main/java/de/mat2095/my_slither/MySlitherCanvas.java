@@ -14,6 +14,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import javax.swing.*;
+import java.util.Random;
 
 
 final class MySlitherCanvas extends JPanel {
@@ -21,7 +22,7 @@ final class MySlitherCanvas extends JPanel {
     private static final Color BACKGROUND_COLOR = new Color(0x2B2B2B);
     private static final Color FOREGROUND_COLOR = new Color(0xA9B7C6);
     private static final Color SECTOR_COLOR = new Color(0x803C3F41, true);
-    private static final Color FOOD_COLOR = new Color(0xCC7832);
+    private static final Color FOOD_COLOR = new Color(0xA5C261);
     private static final Color PREY_COLOR = new Color(0xFFFF00);
     private static final float[] PREY_HALO_FRACTIONS = new float[]{0.5f, 1f};
     private static final Color[] PREY_HALO_COLORS = new Color[]{new Color(0x60FFFF00, true), new Color(0x00FFFF00, true)};
@@ -66,6 +67,16 @@ final class MySlitherCanvas extends JPanel {
         public Wish action(MySlitherModel model) {
             return new Wish(wang, boost);
         }
+    }
+
+    Color genColor()
+    {
+        Random r = new Random();
+        int number = r.nextInt((9 - 1)) + 1;
+        number = 1;
+        return (number == 1) ? Color.PINK: Color.BLUE;
+
+
     }
 
     MySlitherCanvas(MySlitherJFrame view) {
@@ -115,8 +126,11 @@ final class MySlitherCanvas extends JPanel {
             }
         });
 
+        GraphicsEnvironment localGraphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        int refreshRate = localGraphicsEnvironment.getDefaultScreenDevice().getDisplayMode().getRefreshRate();
+        long repaintDelay = 1000000000 / (refreshRate != DisplayMode.REFRESH_RATE_UNKNOWN ? refreshRate : 60);
         repaintThread = Executors.newSingleThreadScheduledExecutor();
-        repaintThread.scheduleAtFixedRate(this::repaint, 1, 16666666, TimeUnit.NANOSECONDS); // 60 FPS
+        repaintThread.scheduleAtFixedRate(this::repaint, 1, repaintDelay, TimeUnit.NANOSECONDS);
     }
 
     void setMap(boolean[] map) {
@@ -173,7 +187,7 @@ final class MySlitherCanvas extends JPanel {
             g.drawOval(-64, -64, model.gameRadius * 2 + 128, model.gameRadius * 2 + 128);
             g.setStroke(oldStroke);
 
-            g.setColor(FOOD_COLOR);
+            g.setColor(genColor());
             model.foods.values().forEach(food -> {
                 double foodRadius = food.getRadius();
                 g.fill(new Ellipse2D.Double(food.x - foodRadius, food.y - foodRadius, foodRadius * 2, foodRadius * 2));
@@ -255,13 +269,6 @@ final class MySlitherCanvas extends JPanel {
                 g.drawString(lengthText, (float) (snake.x - g.getFontMetrics().stringWidth(lengthText) / 2.0), (float) (snake.y - thickness * 2 / 3));
             });
             g.setStroke(oldStroke);
-
-            view.getPlayer().mapPoints.forEach(point -> {
-                if (point.visible) {
-                    g.setColor(point.color);
-                    g.fill(new Ellipse2D.Double(point.x - point.radius, point.y - point.radius, point.radius * 2, point.radius * 2));
-                }
-            });
 
             g.setTransform(oldTransform);
 
