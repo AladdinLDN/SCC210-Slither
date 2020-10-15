@@ -14,7 +14,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import javax.swing.*;
-import java.util.Random;
+
 
 
 final class MySlitherCanvas extends JPanel {
@@ -69,15 +69,7 @@ final class MySlitherCanvas extends JPanel {
         }
     }
 
-    Color genColor()
-    {
-        Random r = new Random();
-        int number = r.nextInt((9 - 1)) + 1;
-        number = 1;
-        return (number == 1) ? Color.PINK: Color.BLUE;
 
-
-    }
 
     MySlitherCanvas(MySlitherJFrame view) {
         super();
@@ -187,8 +179,9 @@ final class MySlitherCanvas extends JPanel {
             g.drawOval(-64, -64, model.gameRadius * 2 + 128, model.gameRadius * 2 + 128);
             g.setStroke(oldStroke);
 
-            g.setColor(genColor());
+
             model.foods.values().forEach(food -> {
+                g.setColor(food.getFoodColour());
                 double foodRadius = food.getRadius();
                 g.fill(new Ellipse2D.Double(food.x - foodRadius, food.y - foodRadius, foodRadius * 2, foodRadius * 2));
             });
