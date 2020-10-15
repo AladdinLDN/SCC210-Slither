@@ -35,10 +35,32 @@ class Food {
     Color genColor()
     {
         Random r = new Random();
-        int number = r.nextInt((2 - 1)+1) + 1;
+        int number = r.nextInt((9 - 1)+1) + 1;
 
-        return (number == 1) ? Color.PINK: Color.BLUE;
+        
+        switch(number) {
+            case 1:
+                return new Color(0xb10000);
+            case 2:
+                return new Color(0x5800b1);
+            case 3:
+                return new Color(0x1cfaff);
+            case 4:
+                return new Color(0x1cffa9);
+            case 5:
+                return new Color(0xf4df60);
+            case 6:
+                return new Color(0xff88ff);
+            case 7:
+                return new Color(0xfe7955);
+            case 8:
+                return new Color(0xaf37ff);
+            case 9:
+                return new Color(0xfffdf3);
 
+            default:
+                return Color.BLACK;
+        }
 
     }
 
