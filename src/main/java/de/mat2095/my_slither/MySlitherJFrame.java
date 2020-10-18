@@ -180,6 +180,7 @@ final class MySlitherJFrame extends JFrame {
 
         PLAYERS.add(canvas.mouseInput);
         PLAYERS.addAll(EaterBot.getPlayers());
+        PLAYERS.add(canvas.keyInput);
 
         player = new JComboBox<>(PLAYERS.stream().map(p -> p.name).toArray(String[]::new));
         player.setMaximumRowCount(player.getItemCount());
