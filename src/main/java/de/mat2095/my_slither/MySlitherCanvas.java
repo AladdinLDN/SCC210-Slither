@@ -14,6 +14,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import javax.swing.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 
 final class MySlitherCanvas extends JPanel {
@@ -46,6 +48,7 @@ final class MySlitherCanvas extends JPanel {
     final ScheduledExecutorService repaintThread;
 
     final MouseInput mouseInput = new MouseInput();
+    final KeyInput keyInput = new KeyInput();
 
     class MouseInput extends Player {
 
@@ -67,7 +70,26 @@ final class MySlitherCanvas extends JPanel {
             return new Wish(wang, boost);
         }
     }
+    class KeyInput extends Player {
 
+        Double wang;
+        boolean boost;
+
+        private KeyInput() {
+            super("Key Input");
+            wang = null;
+            boost = false;
+        }
+
+        private void readWang(MouseEvent e) {
+            wang = (Math.atan2((e.getY() - getHeight() / 2), (e.getX() - getWidth() / 2)) + PI2) % PI2;
+        }
+
+        @Override
+        public Wish action(MySlitherModel model) {
+            return new Wish(wang, boost);
+        }
+    }
     MySlitherCanvas(MySlitherJFrame view) {
         super();
         this.view = view;
@@ -112,6 +134,23 @@ final class MySlitherCanvas extends JPanel {
             @Override
             public void mouseEntered(MouseEvent e) {
                 mouseInput.readWang(e);
+            }
+        });
+
+        addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+
             }
         });
 
