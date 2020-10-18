@@ -49,7 +49,8 @@ final class MySlitherCanvas extends JPanel {
 
     final MouseInput mouseInput = new MouseInput();
     final KeyInput keyInput = new KeyInput();
-    private double Xcordinate = getHeight() / 2;
+
+    private double Xcoordinate = getHeight() / 2;
     private double Ycoordinate = getWidth() / 2;
 
     class MouseInput extends Player {
@@ -66,7 +67,7 @@ final class MySlitherCanvas extends JPanel {
         private void readWang(MouseEvent e) {
             wang = (Math.atan2((e.getY() - getHeight() / 2), (e.getX() - getWidth() / 2)) + PI2) % PI2;
             Ycoordinate = (e.getY() - getHeight() / 2);
-            Xcordinate = (e.getX() - getWidth() / 2) + PI2;
+            Xcoordinate = (e.getX() - getWidth() / 2) + PI2;
         }
 
         @Override
@@ -86,7 +87,7 @@ final class MySlitherCanvas extends JPanel {
         }
 
         private void readWang(double angle) {
-            wang = ((Math.atan2((Ycoordinate - getHeight() / 2), (Xcordinate - getWidth() / 2)) + PI2) % PI2) + angle;
+            wang = ((Math.atan2((Ycoordinate - getHeight() / 2), (Xcoordinate - getWidth() / 2)) + PI2) % PI2) + angle;
             System.out.println("Working");
         }
 
@@ -141,7 +142,8 @@ final class MySlitherCanvas extends JPanel {
                 mouseInput.readWang(e);
             }
         });
-
+        setFocusable(true);
+        requestFocusInWindow();
         addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -156,12 +158,12 @@ final class MySlitherCanvas extends JPanel {
 
             @Override
             public void keyReleased(KeyEvent e) {
-
+                System.out.println("keyTyped: "+e);
             }
 
             @Override
             public void keyTyped(KeyEvent e) {
-
+                System.out.println("keyTyped: "+e);
             }
         });
 
