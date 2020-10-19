@@ -22,7 +22,14 @@ public final class Main {
         SlitherFrame.setVisible(true);
 
         int minutes = 0;
-        long startTime = System.currentTimeMillis();
+        long startTime = 0;
+        while (true) {
+            //only works with this print statement prior to the loop???
+            System.out.println(SlitherFrame.isConnected());
+            //set time to 0
+            if (SlitherFrame.isConnected()) {
+                startTime = System.currentTimeMillis();
+            }
             while (SlitherFrame.isConnected()) {
                 TimeUnit.SECONDS.sleep(1);
                 long secondsPassed = (System.currentTimeMillis() - startTime) / 1000;
@@ -37,3 +44,4 @@ public final class Main {
             }
         }
     }
+}

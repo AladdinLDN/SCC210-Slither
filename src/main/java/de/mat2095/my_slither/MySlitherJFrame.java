@@ -387,13 +387,12 @@ final class MySlitherJFrame extends JFrame {
 
     private void setStatus(Status newStatus) {
 
-    connected = true;
-        //if(newStatus == Status.CONNECTED){
-        //       connected = true;
-        //}
-        //else if ( newStatus == Status.DISCONNECTED){
-        //    connected = false;
-        //}
+        if(newStatus == Status.CONNECTED){
+            connected = true;
+        }
+        else if ( newStatus == Status.DISCONNECTED){
+            connected = false;
+        }
 
         if (newStatus != null) {
             status = newStatus;
