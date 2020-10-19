@@ -33,7 +33,6 @@ public final class Main {
                 if ((secondsPassed % 60) == 0) {
                     minutes++;
                 }
-                System.out.println("waddup");
                 SlitherFrame.updateTime(minutes, secondsPassed);
             }
         }
