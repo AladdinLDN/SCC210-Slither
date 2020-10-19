@@ -210,10 +210,10 @@ final class MySlitherJFrame extends JFrame {
             new GridBagConstraints(4, 2, 1, 1, 0, 0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
         settings.add(rank,
             new GridBagConstraints(5, 2, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
-        settings.add(new JLabel("time alive:"),
-            new GridBagConstraints(4, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
+        settings.add(new JLabel("time elapsed:"),
+            new GridBagConstraints(6, 2, 1, 1, 0, 0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
         settings.add(time,
-            new GridBagConstraints(5, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
+            new GridBagConstraints(7, 2, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
 
         JComponent upperRow = new JPanel(new FlowLayout(FlowLayout.LEFT));
         upperRow.add(settings);
@@ -387,13 +387,13 @@ final class MySlitherJFrame extends JFrame {
 
     private void setStatus(Status newStatus) {
 
-        if(newStatus == Status.CONNECTED){
-            connected = true;
-        }
-        else if ( newStatus == Status.DISCONNECTED){
-            connected = true;
-        }
-
+    connected = true;
+        //if(newStatus == Status.CONNECTED){
+        //       connected = true;
+        //}
+        //else if ( newStatus == Status.DISCONNECTED){
+        //    connected = false;
+        //}
 
         if (newStatus != null) {
             status = newStatus;
