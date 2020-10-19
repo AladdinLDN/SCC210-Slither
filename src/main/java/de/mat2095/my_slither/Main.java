@@ -5,9 +5,9 @@ import javax.swing.*;
 
 public final class Main {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 
-        System.setProperty("sun.java2d.opengl", "false");
+        System.setProperty("sun.java2d.opengl", "true");
 
         // workaround to fix issue on linux: https://github.com/bulenkov/Darcula/issues/29
         UIManager.getFont("Label.font");
