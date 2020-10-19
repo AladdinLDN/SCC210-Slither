@@ -14,6 +14,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import javax.swing.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 
 
@@ -47,6 +49,10 @@ final class MySlitherCanvas extends JPanel {
     final ScheduledExecutorService repaintThread;
 
     final MouseInput mouseInput = new MouseInput();
+    final KeyInput keyInput = new KeyInput();
+
+    private double Xcoordinate = getHeight() / 2;
+    private double Ycoordinate = getWidth() / 2;
 
     class MouseInput extends Player {
 
@@ -61,6 +67,8 @@ final class MySlitherCanvas extends JPanel {
 
         private void readWang(MouseEvent e) {
             wang = (Math.atan2((e.getY() - getHeight() / 2), (e.getX() - getWidth() / 2)) + PI2) % PI2;
+            Ycoordinate = (e.getY() - getHeight() / 2);
+            Xcoordinate = (e.getX() - getWidth() / 2) + PI2;
         }
 
         @Override
@@ -68,7 +76,27 @@ final class MySlitherCanvas extends JPanel {
             return new Wish(wang, boost);
         }
     }
+    class KeyInput extends Player {
 
+        Double wang;
+        boolean boost;
+
+        private KeyInput() {
+            super("Key Input");
+            wang = null;
+            boost = false;
+        }
+
+        private void readWang(double angle) {
+            wang = ((Math.atan2((Ycoordinate - getHeight() / 2), (Xcoordinate - getWidth() / 2)) + PI2) % PI2) + angle;
+            System.out.println("Working");
+        }
+
+        @Override
+        public Wish action(MySlitherModel model) {
+            return new Wish(wang, boost);
+        }
+    }
 
 
     MySlitherCanvas(MySlitherJFrame view) {
@@ -115,6 +143,30 @@ final class MySlitherCanvas extends JPanel {
             @Override
             public void mouseEntered(MouseEvent e) {
                 mouseInput.readWang(e);
+            }
+        });
+        setFocusable(true);
+        requestFocusInWindow();
+        addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyChar() == 'a'){
+                    keyInput.readWang(-0.0174533);
+                }
+                if(e.getKeyChar() == 'd'){
+                    keyInput.readWang(0.0174533);
+                }
+                System.out.println("Key input");
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                System.out.println("keyTyped: "+e);
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                System.out.println("keyTyped: "+e);
             }
         });
 

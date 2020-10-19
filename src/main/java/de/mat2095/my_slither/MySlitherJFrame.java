@@ -139,6 +139,7 @@ final class MySlitherJFrame extends JFrame {
 
         canvas = new MySlitherCanvas(this);
 
+
         // === upper row ===
         JPanel settings = new JPanel(new GridBagLayout());
 
@@ -184,8 +185,10 @@ final class MySlitherJFrame extends JFrame {
             }
         });
 
+        PLAYERS.add(canvas.keyInput);
         PLAYERS.add(canvas.mouseInput);
         PLAYERS.addAll(EaterBot.getPlayers());
+
 
         player = new JComboBox<>(PLAYERS.stream().map(p -> p.name).toArray(String[]::new));
         player.setMaximumRowCount(player.getItemCount());
@@ -328,6 +331,7 @@ final class MySlitherJFrame extends JFrame {
                 throw new IllegalStateException("Connected while not connecting!");
         }
     }
+
 
     void onClose() {
         switch (status) {
