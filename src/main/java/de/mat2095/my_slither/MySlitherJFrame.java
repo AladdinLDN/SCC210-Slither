@@ -95,7 +95,7 @@ final class MySlitherJFrame extends JFrame {
     private final JCheckBox useRandomServer;
     private final JToggleButton connect;
     private final JComboBox<String> player;
-    private final JLabel rank, kills;
+    private final JLabel rank, kills, time;
     private final JSplitPane rightSplitPane, fullSplitPane;
     private final JTextArea log;
     private final JScrollBar logScrollBar;
@@ -109,6 +109,8 @@ final class MySlitherJFrame extends JFrame {
     private MySlitherWebSocketClient client;
     MySlitherModel model;
     final Object modelLock = new Object();
+
+    private boolean connected;
 
     MySlitherJFrame() {
         super("MySlither");
@@ -192,6 +194,8 @@ final class MySlitherJFrame extends JFrame {
 
         kills = new JLabel();
 
+        time = new JLabel();
+
         settings.add(new JLabel("server:"),
             new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
         settings.add(server,
@@ -222,6 +226,10 @@ final class MySlitherJFrame extends JFrame {
             new GridBagConstraints(4, 2, 1, 1, 0, 0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
         settings.add(rank,
             new GridBagConstraints(5, 2, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
+        settings.add(new JLabel("time elapsed:"),
+            new GridBagConstraints(6, 2, 1, 1, 0, 0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
+        settings.add(time,
+            new GridBagConstraints(7, 2, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(2, 2, 2, 2), 0, 0));
 
         JComponent upperRow = new JPanel(new FlowLayout(FlowLayout.LEFT));
         upperRow.add(settings);
@@ -395,6 +403,12 @@ final class MySlitherJFrame extends JFrame {
     }
 
     private void setStatus(Status newStatus) {
+        if(newStatus == Status.CONNECTED){
+            connected = true;
+        }
+        else if ( newStatus == Status.DISCONNECTED){
+            connected = false;
+        }
         if (newStatus != null) {
             status = newStatus;
         }
@@ -468,4 +482,9 @@ final class MySlitherJFrame extends JFrame {
             this.allowModifyData = allowModifyData;
         }
     }
+    public boolean isConnected() {
+        return connected;
+    }
+
+    public void updateTime(int minutes, long seconds) { time.setText(minutes + " : " + seconds); }
 }
