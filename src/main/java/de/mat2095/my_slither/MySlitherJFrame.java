@@ -94,12 +94,8 @@ final class MySlitherJFrame extends JFrame {
     private final JComboBox<String> snake;
     private final JCheckBox useRandomServer;
     private final JToggleButton connect;
-<<<<<<< HEAD
     private final JComboBox<String> player;
-    private final JLabel rank, kills;
-=======
     private final JLabel rank, kills, time;
->>>>>>> c402b2d08e51c23b8ac1c977579b23346bede1f8
     private final JSplitPane rightSplitPane, fullSplitPane;
     private final JTextArea log;
     private final JScrollBar logScrollBar;
